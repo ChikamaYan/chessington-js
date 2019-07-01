@@ -87,8 +87,15 @@ export default class Board {
                 // used as a check to see if this move is a kill move
                 // if new square is blocked, then path is not blocked (allowed)
                 return !this.isNewSquareBlocked(newSquare);
-            default:
+            case MoveType.KNIGHT:
                 return false;
+            case MoveType.EN_PASSANT:
+                let targetPawn = this.board[currentSquare.row][newSquare.col];
+                if (targetPawn === undefined || targetPawn === null) return true;
+
+                return !targetPawn.enPassantable;
+            default:
+                return true;
         }
 
 
@@ -145,9 +152,12 @@ export default class Board {
         return false;
     }
 
-    movePiece(fromSquare, toSquare) {
+    movePiece(fromSquare, toSquare, moveType = MoveType.DEFAULT) {
         const movingPiece = this.getPiece(fromSquare);
-        if (movingPiece && movingPiece.player === this.currentPlayer) { // "!!" ???
+        if (movingPiece && movingPiece.player === this.currentPlayer) {
+            if (moveType === MoveType.EN_PASSANT) {
+                this.setPiece(Square.at(fromSquare.row, toSquare.col), undefined);
+            }
             this.setPiece(toSquare, movingPiece);
             this.setPiece(fromSquare, undefined);
             this.currentPlayer = (this.currentPlayer === Player.WHITE ? Player.BLACK : Player.WHITE);

@@ -22,6 +22,8 @@ describe('Knight', () => {
             Square.at(5, 6), Square.at(5, 2), Square.at(6, 5), Square.at(6, 3)
         ];
 
+        console.log(moves)
+
         moves.should.deep.include.members(expectedMoves);
     });
 

@@ -1,4 +1,5 @@
 import 'chai/register-should';
+import 'chai/register-expect';
 import Pawn from '../../../src/engine/pieces/pawn';
 import Rook from '../../../src/engine/pieces/rook';
 import King from '../../../src/engine/pieces/king';
@@ -20,7 +21,6 @@ describe('Pawn', () => {
 
             const moves = pawn.getAvailableMoves(board);
 
-            console.log(moves);
 
             moves.should.have.length(1);
             moves.should.deep.include(Square.at(3, 0));
@@ -165,6 +165,32 @@ describe('Pawn', () => {
 
             moves.should.not.deep.include(Square.at(3, 3));
         });
+
+        it("can do en passant", () => {
+            const whitePawn = new Pawn(Player.WHITE);
+            const blackPawn = new Pawn(Player.BLACK);
+            board.setPiece(Square.at(4, 0), whitePawn);
+            board.setPiece(Square.at(6, 1), blackPawn);
+
+            blackPawn.moveTo(board, Square.at(4, 1));
+
+            const moves = whitePawn.getAvailableMoves(board);
+
+
+            moves.should.deep.include(Square.at(5, 1));
+        });
+
+        it("can kill with en passant", () => {
+            const whitePawn = new Pawn(Player.WHITE);
+            const blackPawn = new Pawn(Player.BLACK);
+            board.setPiece(Square.at(4, 0), whitePawn);
+            board.setPiece(Square.at(6, 1), blackPawn);
+
+            blackPawn.moveTo(board, Square.at(4, 1));
+            whitePawn.moveTo(board, Square.at(5, 1));
+
+            expect(board.getPiece(Square.at(4, 1))).to.be.undefined;
+        })
     });
 
     it('cannot move if there is a piece in front', () => {
@@ -174,7 +200,6 @@ describe('Pawn', () => {
         board.setPiece(Square.at(5, 3), blockingPiece);
 
         const moves = pawn.getAvailableMoves(board);
-
 
         moves.should.be.empty;
     });

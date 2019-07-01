@@ -5,11 +5,12 @@ export default class Piece {
     constructor(player) {
         this.player = player;
         this.moves = [];
+        this.enPassantable = false;
     }
 
-    moveTo(board, newSquare) {
+    moveTo(board, newSquare, moveType) {
         const currentSquare = board.findPiece(this);
-        board.movePiece(currentSquare, newSquare);
+        board.movePiece(currentSquare, newSquare, moveType);
     }
 
     getAvailableMoves(board) {
@@ -20,6 +21,20 @@ export default class Piece {
             let newSquare = new Square(currentSquare.row + m.rowChange, currentSquare.col + m.colChange);
             if (this.isValidMove(board, currentSquare, newSquare, m.moveType, m.canKill)) {
                 validMoves.push(newSquare);
+            }
+        }
+
+        return validMoves;
+    }
+
+    getAvailableMoveObjects(board){
+        let validMoves = [];
+        let currentSquare = board.findPiece(this);
+
+        for (let m of this.moves) {
+            let newSquare = new Square(currentSquare.row + m.rowChange, currentSquare.col + m.colChange);
+            if (this.isValidMove(board, currentSquare, newSquare, m.moveType, m.canKill)) {
+                validMoves.push(m);
             }
         }
 
