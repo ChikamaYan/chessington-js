@@ -8,6 +8,10 @@ export default class Square {
         return new Square(row, col);
     }
 
+    inBoundary() {
+        return (this.row >= 0 && this.row <= 7 && this.col >= 0 && this.col <= 7)
+    }
+
     equals(otherSquare) {
         return !!otherSquare && this.row === otherSquare.row && this.col === otherSquare.col;
     }
