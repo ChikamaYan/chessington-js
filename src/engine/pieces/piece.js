@@ -35,7 +35,6 @@ export default class Piece {
         return board.inBoundary(newSquare)
             && !board.isPathBlocked(currentSquare, newSquare, moveType)
             && !board.isNewSquareBlocked(newSquare, blockedBy);
-
     }
 
 

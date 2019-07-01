@@ -57,27 +57,29 @@ export default class Board {
         if (moveType === MoveType.LATERAL) {
             let direction;
             let fixed;
+            let start;
+            let end;
             if (currentSquare.row !== newSquare.row) {
                 direction = "row";
                 fixed = currentSquare.col;
+                start = currentSquare.row;
+                end = newSquare.row;
 
             } else {
                 direction = "col";
                 fixed = currentSquare.row;
-
+                start = currentSquare.col;
+                end = newSquare.col;
             }
-
-            return this.isLateralPathBlocked(currentSquare.row, newSquare.row, fixed, direction);
+            return this.isLateralPathBlocked(start, end, fixed, direction);
 
         } else if (moveType === MoveType.DIAGONAL) {
-
+            return this.isDiagonalPathBlocked(currentSquare, newSquare)
         }
-
     }
 
     isLateralPathBlocked(start, end, fixed, direction) {
         if (direction === "row") {
-
             if (start < end) {
                 for (let i = start + 1; i < end; i++) {
                     if (this.board[i][fixed] !== undefined) {
@@ -93,8 +95,38 @@ export default class Board {
             }
 
         } else if (direction === "col") {
-
+            if (start < end) {
+                for (let i = start + 1; i < end; i++) {
+                    if (this.board[fixed][i] !== undefined) {
+                        return true;
+                    }
+                }
+            } else {
+                for (let i = start - 1; i > end; i--) {
+                    if (this.board[fixed][i] !== undefined) {
+                        return true;
+                    }
+                }
+            }
         }
+        return false;
+    }
+
+    isDiagonalPathBlocked(currentSquare, newSquare) {
+        let rowChange = 1 ? newSquare.row > currentSquare.row : -1;
+        let colChange = 1 ? newSquare.col > currentSquare.col : -1;
+
+        let row = currentSquare.row + rowChange;
+        let col = currentSquare.col + colChange;
+
+        while (row !== newSquare.row && col !== newSquare.col) {
+            if (this.board[row][col] !== undefined) {
+                return true;
+            }
+            row += rowChange;
+            col += colChange;
+        }
+        return false;
     }
 
     movePiece(fromSquare, toSquare) {
