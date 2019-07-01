@@ -22,14 +22,13 @@ export default class Piece {
             }
         }
 
-
         return validMoves;
     }
 
     static isValidMove(board, square) {
         // square is the destination
 
-        return square.inBoundary();
+        return board.inBoundary(square);
 
         // TODO: check overlap as well;
     }

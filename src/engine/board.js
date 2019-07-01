@@ -35,9 +35,14 @@ export default class Board {
         throw new Error('The supplied piece is not on the board');
     }
 
+    inBoundary(square) {
+        return (square.row >= 0 && square.row < GameSettings.BOARD_SIZE &&
+            square.col >= 0 && square.col < GameSettings.BOARD_SIZE);
+    }
+
     movePiece(fromSquare, toSquare) {
         const movingPiece = this.getPiece(fromSquare);
-        if (!!movingPiece && movingPiece.player === this.currentPlayer) {
+        if (!!movingPiece && movingPiece.player === this.currentPlayer) { // "!!" ???
             this.setPiece(toSquare, movingPiece);
             this.setPiece(fromSquare, undefined);
             this.currentPlayer = (this.currentPlayer === Player.WHITE ? Player.BLACK : Player.WHITE);

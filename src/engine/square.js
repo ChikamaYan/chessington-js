@@ -9,7 +9,7 @@ export default class Square {
     }
 
     inBoundary() {
-        return (this.row >= 0 && this.row <= 7 && this.col >= 0 && this.col <= 7)
+
     }
 
     equals(otherSquare) {
