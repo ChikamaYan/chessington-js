@@ -160,7 +160,23 @@ export default class Board {
             }
             this.setPiece(toSquare, movingPiece);
             this.setPiece(fromSquare, undefined);
+            this.resetEnPassantable();
+
             this.currentPlayer = (this.currentPlayer === Player.WHITE ? Player.BLACK : Player.WHITE);
+        }
+    }
+
+    resetEnPassantable() {
+        for (let i of this.board) {
+            for (let j of i) {
+                if (j === undefined) {
+                    continue;
+                }
+                if (j.player === this.currentPlayer) {
+                    j.enPassantable = false;
+                }
+
+            }
         }
     }
 }
