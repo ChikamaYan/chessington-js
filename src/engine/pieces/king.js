@@ -9,9 +9,9 @@ export default class King extends Piece {
         this.moves = [];
 
         this.moves = this.moves.concat(Move.constructSameType([[1, 1], [-1, -1], [1, -1], [-1, 1]],
-            MoveType.DIAGONAL, false));
+            MoveType.DIAGONAL, true));
         this.moves = this.moves.concat(Move.constructSameType([[1, 0], [-1, 0], [0, 1], [0, -1]],
-            MoveType.LATERAL, false));
+            MoveType.LATERAL, true));
 
     }
 

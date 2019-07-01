@@ -9,9 +9,9 @@ export default class Queen extends Piece {
         this.moves = [];
         for (let i = 1; i < GameSettings.BOARD_SIZE; i++) {
             this.moves = this.moves.concat(Move.constructSameType([[i, i], [-i, -i], [i, -i], [-i, i]],
-                MoveType.DIAGONAL, false));
+                MoveType.DIAGONAL, true));
             this.moves = this.moves.concat(Move.constructSameType([[i, 0], [-i, 0], [0, i], [0, -i]],
-                MoveType.LATERAL, false));
+                MoveType.LATERAL, true));
 
         }
     }
