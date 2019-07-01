@@ -63,6 +63,7 @@ export default class Board {
 
         switch (moveType) {
             case MoveType.LATERAL:
+            case MoveType.LATERAL_NONKILL:
                 let direction;
                 let fixed;
                 let start;
@@ -80,7 +81,6 @@ export default class Board {
                     end = newSquare.col;
                 }
                 return this.isLateralPathBlocked(start, end, fixed, direction);
-
             case MoveType.DIAGONAL:
                 return this.isDiagonalPathBlocked(currentSquare, newSquare);
             case MoveType.KILL:

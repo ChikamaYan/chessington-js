@@ -1,4 +1,5 @@
 import Square from "./../square"
+import MoveType from "../moveType";
 
 export default class Piece {
     constructor(player) {
@@ -25,10 +26,10 @@ export default class Piece {
         return validMoves;
     }
 
-    isValidMove(board, currentSquare, newSquare, moveType, canKill) {
+    isValidMove(board, currentSquare, newSquare, moveType) {
 
         let blockedBy = this.player;
-        if (!canKill) {
+        if (moveType === MoveType.LATERAL_NONKILL) {
             blockedBy = "both";
         }
 
