@@ -1,17 +1,17 @@
 import Piece from './piece';
 import Player from "../player";
-
+import Move from "../move";
+import MoveType from "../moveType";
 
 export default class Pawn extends Piece {
-
 
     constructor(player) {
         super(player);
 
         if (player === Player.WHITE) {
-            this.moves = [[1, 0], [2, 0]];
+            this.moves = [new Move(1, 0, MoveType.LATERAL, false), new Move(2, 0, MoveType.LATERAL, false)];
         } else {
-            this.moves = [[-1, 0], [-2, 0]];
+            this.moves = [new Move(-1, 0, MoveType.LATERAL, false), new Move(-2, 0, MoveType.LATERAL, false)];
         }
     }
 

@@ -1,6 +1,7 @@
 import Player from './player';
 import GameSettings from './gameSettings';
 import Square from './square';
+import MoveType from "./moveType";
 
 export default class Board {
     constructor(currentPlayer) {
@@ -38,6 +39,62 @@ export default class Board {
     inBoundary(square) {
         return (square.row >= 0 && square.row < GameSettings.BOARD_SIZE &&
             square.col >= 0 && square.col < GameSettings.BOARD_SIZE);
+    }
+
+    isNewSquareBlocked(square, player = "both") {
+        if (this.getPiece(square) === undefined) {
+            return false;
+        }
+
+        if (player === "both") {
+            return true;
+        }
+
+        return this.getPiece(square).player === player;
+    }
+
+    isPathBlocked(currentSquare, newSquare, moveType) {
+        if (moveType === MoveType.LATERAL) {
+            let direction;
+            let fixed;
+            if (currentSquare.row !== newSquare.row) {
+                direction = "row";
+                fixed = currentSquare.col;
+
+            } else {
+                direction = "col";
+                fixed = currentSquare.row;
+
+            }
+
+            return this.isLateralPathBlocked(currentSquare.row, newSquare.row, fixed, direction);
+
+        } else if (moveType === MoveType.DIAGONAL) {
+
+        }
+
+    }
+
+    isLateralPathBlocked(start, end, fixed, direction) {
+        if (direction === "row") {
+
+            if (start < end) {
+                for (let i = start + 1; i < end; i++) {
+                    if (this.board[i][fixed] !== undefined) {
+                        return true;
+                    }
+                }
+            } else {
+                for (let i = start - 1; i > end; i--) {
+                    if (this.board[i][fixed] !== undefined) {
+                        return true;
+                    }
+                }
+            }
+
+        } else if (direction === "col") {
+
+        }
     }
 
     movePiece(fromSquare, toSquare) {

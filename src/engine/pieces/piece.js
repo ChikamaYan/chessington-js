@@ -13,24 +13,29 @@ export default class Piece {
 
     getAvailableMoves(board) {
         let validMoves = [];
-        let currentPos = board.findPiece(this);
+        let currentSquare = board.findPiece(this);
 
         for (let m of this.moves) {
-            let newPos = new Square(currentPos.row + m[0], currentPos.col + m[1]);
-            if (Piece.isValidMove(board, newPos)) {
-                validMoves.push(newPos);
+            let newSquare = new Square(currentSquare.row + m.rowChange, currentSquare.col + m.colChange);
+            if (this.isValidMove(board, currentSquare, newSquare, m.moveType, m.canKill)) {
+                validMoves.push(newSquare);
             }
         }
 
         return validMoves;
     }
 
-    static isValidMove(board, square) {
-        // square is the destination
+    isValidMove(board, currentSquare, newSquare, moveType, canKill) {
 
-        return board.inBoundary(square);
+        let blockedBy = this.player;
+        if (!canKill) {
+            blockedBy = "both";
+        }
 
-        // TODO: check overlap as well;
+        return board.inBoundary(newSquare)
+            && !board.isPathBlocked(currentSquare, newSquare, moveType)
+            && !board.isNewSquareBlocked(newSquare, blockedBy);
+
     }
 
 
