@@ -2,6 +2,7 @@ import Player from './player';
 import GameSettings from './gameSettings';
 import Square from './square';
 import MoveType from "./moveType";
+import King from "./pieces/king";
 
 export default class Board {
     constructor(currentPlayer) {
@@ -47,6 +48,11 @@ export default class Board {
         }
 
         if (player === "both") {
+            return true;
+        }
+
+        if (this.getPiece(square) instanceof King) {
+            // cannot take the king
             return true;
         }
 
