@@ -8,9 +8,6 @@ export default class Square {
         return new Square(row, col);
     }
 
-    inBoundary() {
-
-    }
 
     equals(otherSquare) {
         return !!otherSquare && this.row === otherSquare.row && this.col === otherSquare.col;
