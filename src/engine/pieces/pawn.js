@@ -9,9 +9,19 @@ export default class Pawn extends Piece {
         super(player);
 
         if (player === Player.WHITE) {
-            this.moves = [new Move(1, 0, MoveType.LATERAL, false), new Move(2, 0, MoveType.LATERAL, false)];
+            this.moves = [
+                new Move(1, 0, MoveType.LATERAL, false),
+                new Move(1, -1, MoveType.KILL, true),
+                new Move(1, 1, MoveType.KILL, true),
+                new Move(2, 0, MoveType.LATERAL, false)
+            ];
         } else {
-            this.moves = [new Move(-1, 0, MoveType.LATERAL, false), new Move(-2, 0, MoveType.LATERAL, false)];
+            this.moves = [
+                new Move(-1, 0, MoveType.LATERAL, false),
+                new Move(-1, -1, MoveType.KILL, true),
+                new Move(-1, 1, MoveType.KILL, true),
+                new Move(-2, 0, MoveType.LATERAL, false)
+            ];
         }
     }
 

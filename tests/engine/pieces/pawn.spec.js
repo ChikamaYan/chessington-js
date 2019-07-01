@@ -20,6 +20,8 @@ describe('Pawn', () => {
 
             const moves = pawn.getAvailableMoves(board);
 
+            console.log(moves);
+
             moves.should.have.length(1);
             moves.should.deep.include(Square.at(3, 0));
         });
@@ -173,7 +175,6 @@ describe('Pawn', () => {
 
         const moves = pawn.getAvailableMoves(board);
 
-        console.log(moves);
 
         moves.should.be.empty;
     });

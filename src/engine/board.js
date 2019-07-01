@@ -60,28 +60,38 @@ export default class Board {
     }
 
     isPathBlocked(currentSquare, newSquare, moveType) {
-        if (moveType === MoveType.LATERAL) {
-            let direction;
-            let fixed;
-            let start;
-            let end;
-            if (currentSquare.row !== newSquare.row) {
-                direction = "row";
-                fixed = currentSquare.col;
-                start = currentSquare.row;
-                end = newSquare.row;
 
-            } else {
-                direction = "col";
-                fixed = currentSquare.row;
-                start = currentSquare.col;
-                end = newSquare.col;
-            }
-            return this.isLateralPathBlocked(start, end, fixed, direction);
+        switch (moveType) {
+            case MoveType.LATERAL:
+                let direction;
+                let fixed;
+                let start;
+                let end;
+                if (currentSquare.row !== newSquare.row) {
+                    direction = "row";
+                    fixed = currentSquare.col;
+                    start = currentSquare.row;
+                    end = newSquare.row;
 
-        } else if (moveType === MoveType.DIAGONAL) {
-            return this.isDiagonalPathBlocked(currentSquare, newSquare)
+                } else {
+                    direction = "col";
+                    fixed = currentSquare.row;
+                    start = currentSquare.col;
+                    end = newSquare.col;
+                }
+                return this.isLateralPathBlocked(start, end, fixed, direction);
+
+            case MoveType.DIAGONAL:
+                return this.isDiagonalPathBlocked(currentSquare, newSquare);
+            case MoveType.KILL:
+                // used as a check to see if this move is a kill move
+                // if new square is blocked, then path is not blocked (allowed)
+                return !this.isNewSquareBlocked(newSquare);
+            default:
+                return false;
         }
+
+
     }
 
     isLateralPathBlocked(start, end, fixed, direction) {
