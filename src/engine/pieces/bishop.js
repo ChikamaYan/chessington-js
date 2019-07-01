@@ -8,7 +8,7 @@ export default class Bishop extends Piece {
         super(player);
         this.moves = [];
         for (let i = 1; i < GameSettings.BOARD_SIZE; i++) {
-            this.moves.concat(Move.constructSameType([[i, i], [-i, -i], [i, -i], [-i, i]],
+            this.moves = this.moves.concat(Move.constructSameType([[i, i], [-i, -i], [i, -i], [-i, i]],
                 MoveType.DIAGONAL, false));
         }
     }

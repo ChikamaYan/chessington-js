@@ -113,8 +113,8 @@ export default class Board {
     }
 
     isDiagonalPathBlocked(currentSquare, newSquare) {
-        let rowChange = 1 ? newSquare.row > currentSquare.row : -1;
-        let colChange = 1 ? newSquare.col > currentSquare.col : -1;
+        let rowChange = newSquare.row > currentSquare.row ? 1 : -1;
+        let colChange = newSquare.col > currentSquare.col ? 1 : -1;
 
         let row = currentSquare.row + rowChange;
         let col = currentSquare.col + colChange;

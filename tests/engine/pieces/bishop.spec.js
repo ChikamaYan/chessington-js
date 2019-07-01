@@ -23,6 +23,8 @@ describe('Bishop', () => {
             Square.at(0, 5), Square.at(1, 4), Square.at(3, 2), Square.at(4, 1), Square.at(5, 0)
         ];
 
+        console.log(moves);
+
         moves.should.deep.include.members(expectedMoves);
     });
 
